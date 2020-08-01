@@ -10,7 +10,7 @@ const getBy = async filter => {
 
 const add = async user => {
   const [id] = await db('users').insert(user, "id");
-  return await getBy({ id })
+  return getBy({ id })
 }
 
 

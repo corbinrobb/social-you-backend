@@ -11,7 +11,7 @@ router.post('/register', async (req, res) => {
 
     const newUser = await Users.add({ ...req.body, password: hash });
 
-    res.status(201).json({ message: 'Succesfully created new user!'})
+    res.status(201).json({ message: 'Succesfully created new user!', user: {...newUser, password: null}})
   } catch(error) {
     console.log(error)
     res.status(500).json({ error: 'Could not add user to the database'})

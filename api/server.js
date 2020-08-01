@@ -13,7 +13,7 @@ server.use(cors());
 server.use(helmet());
 
 server.use('/api/auth', authRouter);
-server.use('/api/posts', authenticateUser, postsRouter);
+server.use('/api/posts', postsRouter);
 
 
 module.exports = server;

@@ -11,4 +11,15 @@ router.get('/', async (req, res) => {
   }
 })
 
+router.post('/', async (req, res) => {
+  try {
+    const post = await Posts.add(req.body);
+    res.status(201).json(post)
+  } catch(error) {
+    console.log(error)
+    res.status(500).json({ error: 'Could not add post to database' })
+  }
+})
+
+
 module.exports = router;
