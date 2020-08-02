@@ -1,5 +1,6 @@
 const db = require('../data/dbConfig');
 
+
 const get = async () => {
   return await db('users');
 }
