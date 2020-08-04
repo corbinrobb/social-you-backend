@@ -1,22 +1,24 @@
-const jwt = require('jsonwebtoken');
-const secrets = require('../config/secrets');
+const jwt = require("jsonwebtoken");
+const secrets = require("../config/secrets");
 
-const Posts = require('../models/posts-models');
-
+const Posts = require("../models/posts-models");
 
 const authenticateUser = (req, res, next) => {
   const token = req.headers.authorization;
 
   if (token) {
     jwt.verify(token, secrets.jwtSecret, (err, decoded) => {
-      if (err) return res.status(401).json({ error: 'Incorrect token provided' });
+      if (err)
+        return res.status(401).json({ error: "Incorrect token provided" });
       req.decoded = decoded;
-      next()
-    })
+      next();
+    });
   } else {
-    return res.status(400).json({ error: 'Must provide a token in authorization header' })
+    return res
+      .status(400)
+      .json({ error: "Must provide a token in authorization header" });
   }
-}
+};
 
 const validatePostExists = async (req, res, next) => {
   try {
@@ -24,23 +26,23 @@ const validatePostExists = async (req, res, next) => {
     const post = await Posts.getById(id);
     req.post = post;
     next();
-  } catch(error) {
-    res.status(404).json({ error: 'Could not find post with that id' })
+  } catch (error) {
+    res.status(404).json({ error: "Could not find post with that id" });
   }
-}
+};
 
-const validatePostBody = (req, res) => {
-  const { content, user_id } = req.params;
+const validatePostBody = (req, res, next) => {
+  const { contents, user_id } = req.body;
 
-  if (!content || !user_id) {
-    return res.status(400).json({ error: 'Provide content and user_id' });
+  if (!contents || !user_id) {
+    return res.status(400).json({ error: "Provide contents and user_id" });
   }
 
-  next()
-}
+  next();
+};
 
 module.exports = {
   authenticateUser,
   validatePostExists,
-  validatePostBody
-}
+  validatePostBody,
+};
