@@ -116,6 +116,3 @@ dist
 .pnp.*
 
 
-
-# Uncomment after successful deploynment
-config/
