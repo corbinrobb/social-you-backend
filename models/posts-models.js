@@ -1,7 +1,9 @@
 const db = require("../data/dbConfig");
 
 const get = async () => {
-  return await db("posts");
+  return await db("posts")
+    .join("users", "users.id", "posts.user_id")
+    .select("posts.*", "users.username");
 };
 
 const getById = async (id) => {
